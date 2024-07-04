@@ -10,5 +10,11 @@
     "username": "teste2",
     "email": "teste2@teste.com.br",
     "password": "$2b$10$sJZmZeUm6lKmGkq7YluYLO72gC1NzzLszRGAfHnjLCAloiONY2ahS"
+  },
+  {
+    "id": 3,
+    "username": "DevU",
+    "email": "devu@unifei.edu.br",
+    "password": "$2b$10$7HRGYahmqbRvyFITRsFvneCTSl0HW7wPS57wnZrhfPBnDDuHQSLTi"
   }
 ]

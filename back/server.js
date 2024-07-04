@@ -10,6 +10,9 @@ app.use(cors());
 //Função para extrair os dados do pacote IP
 app.use(express.json())
 
+//importar rotas posts
+const postsRoutes = require('./router/posts');
+
 //importar rotas propriedades
 const propriedadesRoutes = require('./router/propriedades');
 
@@ -19,6 +22,7 @@ const authRoutes = require('./router/auth');
 //rotas para os dois serviços
 app.use('/auth', authRoutes);
 app.use('/propriedades', propriedadesRoutes);
+app.use('/posts', postsRoutes);
 
 app.listen(3000, ()=>{
     console.log('Servidor Ouvindo');

@@ -1,0 +1,16 @@
+[
+    {
+        "id": 12345,
+        "titulo": "Saíram os resultados da ArcadeJam!",
+        "descricao": "Após duas semanas de seu início, os competidores da GameJam com temática de arcade concluíram seus projetos. Venha conferir os divertidos jogos em nosso itch.io!",
+        "data": "2023-12-10",
+        "temperatura": 23
+    },
+    {
+        "id": 40028922,
+        "titulo": "BlackBee sai triumfante da Alemanha",
+        "descricao": "O Projeto de Extensão BlackBee da UNIFEI participou recentemente de uma competição de drones da Alemanha, onde saiu com os prêmios de Melhor Condução Autônoma e ficou em terceiro lugar na pontuação total.",
+        "data": "2023-11-05",
+        "temperatura": 30
+    }
+]
