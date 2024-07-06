@@ -19,7 +19,7 @@ const propriedadesRoutes = require('./router/propriedades');
 //importar rotas autenticacao
 const authRoutes = require('./router/auth');
 
-//rotas para os dois serviços
+//rotas para os serviços
 app.use('/auth', authRoutes);
 app.use('/propriedades', propriedadesRoutes);
 app.use('/posts', postsRoutes);

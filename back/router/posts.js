@@ -61,7 +61,23 @@ router.put('/atualizar-post', autenticarToken, async (req, res) => {
   }
 });
 
-// Outras rotas...
+router.delete('/deletar-post/:id', autenticarToken, (req,res) => {
+
+  const {id} = req.params;
+
+  const acharIndex = (p) => {
+      return p.id === Number(id)
+  }
+
+  const index = posts.findIndex(acharIndex);
+
+  posts.splice(index,1);
+
+  fs.writeFileSync(bdPath, JSON.stringify(posts,null,2));
+
+  res.status(200).send("Post deletado com sucesso.");
+
+});
 
 function autenticarToken(req, res, next) {
   const authH = req.headers['authorization'];
