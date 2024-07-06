@@ -51,7 +51,7 @@ router.post('/login', async (req,res) => {
     //Nesse ponto não existe usuario com email informado.
     return res.status(409).send(`Usuario com email ${email} não existe. Considere criar uma conta!`);
 
-})
+});
 
 //requisição POST para cadastrar usuário.
 //rota pública
@@ -85,6 +85,60 @@ router.post('/create', async (req,res) => {
     fs.writeFileSync(bdPath,JSON.stringify(usuariosCadastrados,null,2));
     res.send(`Tudo certo usuario criado com sucesso. id=${id}`);
 });
+
+//requisição PUT para atualizar o perfil do usuário
+//rota protegida
+router.put('/update', autenticarToken, async (req, res) => {
+    const { id, username, email, password } = req.body;
+
+    const userIndex = usuariosCadastrados.findIndex(u => u.id === id);
+    if (userIndex === -1) {
+        return res.status(404).send('Usuário não encontrado.');
+    }
+
+    if (username) {
+        usuariosCadastrados[userIndex].username = username;
+    }
+    if (email) {
+        usuariosCadastrados[userIndex].email = email;
+    }
+    if (password) {
+        const salt = await bcrypt.genSalt(10);
+        usuariosCadastrados[userIndex].password = await bcrypt.hash(password, salt);
+    }
+
+    fs.writeFileSync(bdPath, JSON.stringify(usuariosCadastrados, null, 2));
+    res.send('Perfil atualizado com sucesso.');
+});
+
+//requisição DELETE para deletar o perfil do usuário
+//rota protegida
+router.delete('/delete/:id', autenticarToken, (req, res) => {
+    const { id } = req.params;
+
+    const userIndex = usuariosCadastrados.findIndex(u => u.id === parseInt(id));
+    if (userIndex === -1) {
+        return res.status(404).send('Usuário não encontrado.');
+    }
+
+    usuariosCadastrados.splice(userIndex, 1);
+    fs.writeFileSync(bdPath, JSON.stringify(usuariosCadastrados, null, 2));
+    res.send('Usuário deletado com sucesso.');
+});
+
+function autenticarToken(req, res, next) {
+    const authH = req.headers['authorization'];
+    const token = authH && authH.split(' ')[1];
+    if (token == null) return res.status(401).send('Token não encontrado');
+    
+    try {
+        const user = jwt.verify(token, process.env.TOKEN);
+        req.user = user;
+        next();
+    } catch (error) {
+        res.status(403).send('Token inválido');
+    }
+}
 
 module.exports = router;
 
