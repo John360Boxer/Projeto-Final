@@ -1,0 +1,11 @@
+.head{
+    background-color: rgba(0, 191, 178, 1);
+    display: flex;
+    flex-direction: row;
+}
+body{
+    background-color: white;
+}
+.head p{
+    color: black;
+}

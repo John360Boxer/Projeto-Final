@@ -1,0 +1,26 @@
+.bold{
+    font-weight: bold;
+    /* background-color: red; */
+    /* margin-right: -10px; */
+}
+
+.informacoes{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#mais {
+    background-color: white;
+    height: fit-content;
+    color: black;
+}
+
+.alinhar{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+    align-items: center;
+    /* background-color: red; */
+}
+

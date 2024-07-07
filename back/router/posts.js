@@ -13,7 +13,7 @@ router.get('/posts', autenticarToken, (req, res) => {
 });
 
 router.post('/adicionar-post', autenticarToken, async (req, res) => {
-  const { id, titulo, descricao, data } = req.body;
+  const { id, titulo, descricao, data, foto } = req.body;
 
   try {
     const temperatura = await pegaTempData(data);
@@ -23,7 +23,8 @@ router.post('/adicionar-post', autenticarToken, async (req, res) => {
       titulo,
       descricao,
       data,
-      temperatura
+      temperatura,
+      foto
     };
 
     posts.push(novoPost);
@@ -36,7 +37,7 @@ router.post('/adicionar-post', autenticarToken, async (req, res) => {
 });
 
 router.put('/atualizar-post', autenticarToken, async (req, res) => {
-  const { id, titulo, descricao, data } = req.body;
+  const { id, titulo, descricao, data, foto } = req.body;
 
   try {
     const temperatura = await pegaTempData(data); // Use await para resolver a Promise
@@ -46,7 +47,8 @@ router.put('/atualizar-post', autenticarToken, async (req, res) => {
       titulo,
       descricao,
       data,
-      temperatura
+      temperatura,
+      foto
     };
 
     const acharIndex = (p) => p.id === Number(id);
