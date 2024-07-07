@@ -1,20 +1,14 @@
 [
   {
     "id": 1,
-    "username": "teste",
+    "username": "Teste",
     "email": "teste@teste.com.br",
-    "password": "$2b$10$qHpHIAjAfYy9lK5yrWL8N.QVhDCpM13giX6gguGU.hgZjE6CRDbJe"
+    "password": "$2b$10$bSGebbL/OCOqneT7aBu3UeIoCd4NIuXBSyL0QcIm3SSid/b3Jj3au"
   },
   {
     "id": 2,
-    "username": "teste2",
-    "email": "teste2@teste.com.br",
-    "password": "$2b$10$sJZmZeUm6lKmGkq7YluYLO72gC1NzzLszRGAfHnjLCAloiONY2ahS"
-  },
-  {
-    "id": 3,
     "username": "DevU",
     "email": "devu@unifei.edu.br",
-    "password": "$2b$10$7HRGYahmqbRvyFITRsFvneCTSl0HW7wPS57wnZrhfPBnDDuHQSLTi"
+    "password": "$2b$10$b2/kBhyqhgHMHb8CCtIoFeexEpImP2g6I7O7Ha7DOMvXENEk7Wkwu"
   }
 ]

@@ -8,8 +8,8 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
 export default function AddPost() {
-
     const [msg, setMsg] = useState('');
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     const [post, setPost] = useState({
         id : Date.now()+Math.random()%250,
@@ -32,16 +32,29 @@ export default function AddPost() {
         });
     }
 
+    const config = {
+        headers: {
+            Authorization: "Bearer " + sessionStorage.getItem('token')
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(post); // Changed from propriedade to post
         try {
-            const resposta = await axios.post('http://localhost:3000/posts/adicionar-post', post);
+            const resposta = await axios.post('http://localhost:3000/posts/adicionar-post', post, config);
+
             if(resposta.status === 200)
                 setMsg('OK');
         } catch (error) {
-            console.log(error);    
+            console.log(error);
+            setIsAuthenticated(false);
         }
+    }
+
+    if (!isAuthenticated) {
+        // Redireciona para a página de erro de autenticação
+        return <Navigate to="/auth-error" />;
     }
 
     const handleFileChange = (e) => {
@@ -117,7 +130,7 @@ export default function AddPost() {
     />
 </InputGroup>
 <Link to="/Home" className="btn btn-secondary">Voltar</Link>
-                <Button type="submit" className="ml-2">Atualizar</Button>
+                <Button type="submit" className="ml-2">Criar post</Button>
             </Form>
             
         </>

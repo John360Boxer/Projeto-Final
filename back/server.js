@@ -7,6 +7,11 @@ const app = express();
 
 //Liberar rota cors
 app.use(cors());
+
+//Utilizado para aumentar o peso máximo de imagens enviadas por usuários
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
+
 //Função para extrair os dados do pacote IP
 app.use(express.json())
 

@@ -9,6 +9,8 @@ import Button from 'react-bootstrap/Button';
 
 export default function AtualizarPost() {
     const { foto, titulo, descricao, data, temperatura,id } = useLocation().state;
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+
     const [post, setPost] = useState({
         foto: foto,
         titulo: titulo,
@@ -17,6 +19,7 @@ export default function AtualizarPost() {
         temperatura: temperatura,
         id:id
     });
+    
     const [msg, setMsg] = useState('');
 
     const handleChange = (e) => {
@@ -28,6 +31,12 @@ export default function AtualizarPost() {
             ...novoValor
         });
     };
+
+    const config = {
+        headers: {
+            Authorization: "Bearer " + sessionStorage.getItem('token')
+        }
+    }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -47,17 +56,23 @@ export default function AtualizarPost() {
         e.preventDefault();
 
         try {
-            const resposta = await axios.put('http://localhost:3000/posts/atualizar-post', post);
+            const resposta = await axios.put('http://localhost:3000/posts/atualizar-post', post, config);
             if (resposta.status === 200) {
                 setMsg('OK');
             }
         } catch (error) {
             console.log(error);
+            setIsAuthenticated(false);
         }
     };
 
+    if (!isAuthenticated) {
+        // Redireciona para a página de erro de autenticação
+        return <Navigate to="/auth-error" />;
+    }
+
     if (msg === 'OK') {
-        return <Navigate to='/' />;
+        return <Navigate to='/home' />;
     }
 
     return (

@@ -24,33 +24,30 @@ require('dotenv').config();
 
 //requisição POST para autenticar usuário.
 //rota pública
-router.post('/login', async (req,res) => {
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
 
-    //extraindo os dados do formulário para criacao do usuario
-    const {email, password} = req.body; 
+    // Busca pelo usuário no banco de dados
+    const user = usuariosCadastrados.find(user => user.email === email);
 
-    //verifica se existe usuario com email       
-    for (let user of usuariosCadastrados){
-        if(user.email === email){
-            //usuario existe.  Agora é verificar a senha
-            const passwordValidado = await bcrypt.compare(password, user.password);
-            if(passwordValidado===true){
-                //Usuario foi autenticado.
-                //Agora vamos retornar um token de acesso
-                //para isso usamos jwt
-                //O primeiro parametro é o que queremos serializar (o proprio user)
-                //O segundo parametro é a chave secreta do token. Está no arquivo .env
-                //La coloquei as instruções de como gerar
-                const tokenAcesso = jwt.sign(user,process.env.TOKEN);
-                return res.status(200).json(tokenAcesso);
-            }
-            else
-                return res.status(422).send(`Usuario ou senhas incorretas.`);
-        }   
+    if (!user) {
+        return res.status(409).send(`Usuário com email ${email} não existe.`);
     }
-    //Nesse ponto não existe usuario com email informado.
-    return res.status(409).send(`Usuario com email ${email} não existe. Considere criar uma conta!`);
 
+    // Verifica a senha
+    const passwordValidado = await bcrypt.compare(password, user.password);
+    if (!passwordValidado) {
+        return res.status(422).send('Usuário ou senha incorretos.');
+    }
+
+    // Usuário autenticado, gera o token de acesso
+    const tokenAcesso = jwt.sign({
+        id: user.id,
+        username: user.username,
+        email: user.email
+    }, process.env.TOKEN);
+
+    return res.status(200).json(tokenAcesso);
 });
 
 //requisição POST para cadastrar usuário.
